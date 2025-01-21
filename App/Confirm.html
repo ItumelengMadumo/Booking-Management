@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+</head>
+<body>
+    <h1>Booking Confirmation</h1>
+    <p>Thank you for your booking. Here are the details:</p>
+    <p>Service Name: <span id="confirm-service-name"></span></p>
+    <p>Date: <span id="confirm-date"></span></p>
+    <p>Time: <span id="confirm-time"></span></p>
+    <p>User Email: <span id="confirm-email"></span></p>
+    <button onclick="window.location.href='success.html'">Confirm</button>
+</body>
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Assuming these values are fetched from somewhere
+        const bookingDetails = {
+            serviceName: 'Service Example',
+            date: '2023-10-01',
+            time: '10:00 AM',
+            email: 'user@example.com'
+        };
+
+        // Populate the confirmation fields
+        document.getElementById('confirm-service-name').textContent = bookingDetails.serviceName;
+        document.getElementById('confirm-date').textContent = bookingDetails.date;
+        document.getElementById('confirm-time').textContent = bookingDetails.time;
+        document.getElementById('confirm-email').textContent = bookingDetails.email;
+
+        // Add event listener to the confirm button
+        document.querySelector('button').addEventListener('click', function() {
+            const isConfirmed = confirm('Are all details correct?');
+            if (isConfirmed) {
+                window.location.href = 'success.html';
+            } else {
+                // Allow user to edit the details
+                const newServiceName = prompt('Enter Service Name:', bookingDetails.serviceName);
+                const newDate = prompt('Enter Date:', bookingDetails.date);
+                const newTime = prompt('Enter Time:', bookingDetails.time);
+                const newEmail = prompt('Enter Email:', bookingDetails.email);
+
+                // Update the confirmation fields with new values
+                document.getElementById('confirm-service-name').textContent = newServiceName;
+                document.getElementById('confirm-date').textContent = newDate;
+                document.getElementById('confirm-time').textContent = newTime;
+                document.getElementById('confirm-email').textContent = newEmail;
+            }
+        });
+    });
+</script>

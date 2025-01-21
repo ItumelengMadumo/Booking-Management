@@ -26,7 +26,25 @@ Example usage:
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
+import re
 
+service_name = input("Enter the service name: ")
+date = input("Enter the date (YYYY-MM-DD): ")
+time = input("Enter the time (HH:MM AM/PM): ")
+user_email = input("Enter your email address: ")
+# Validate and process user inputs
+try:
+    # Convert date and time to a datetime object to ensure correct format
+    booking_datetime = datetime.strptime(f"{date} {time}", "%Y-%m-%d %I:%M %p")
+except ValueError as e:
+    print(f"Error in date/time format: {e}")
+    exit(1)
+
+# Ensure the email format is valid
+email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+if not re.match(email_regex, user_email):
+    print("Invalid email format")
+    exit(1)
 def book_service(service_name, date, time, user_email):
     booking_details = {
         'service_name': service_name,
@@ -36,6 +54,8 @@ def book_service(service_name, date, time, user_email):
     }
     send_confirmation_email(booking_details)
     return booking_details
+    # Log the booking details
+    print(f"Booking confirmed: {booking_details}")
 
 def send_confirmation_email(booking_details):
     sender_email = "your_email@example.com"
